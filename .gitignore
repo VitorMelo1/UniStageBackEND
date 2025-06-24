@@ -1,2 +1,12 @@
+# Arquivos compilados Python
+__pycache__/
+*.pyc
+
+#Ambiente Virtual
 venv/
+
+#Variaveis de Ambiente
 BackStage/.env
+
+# Arquivos de Sistema Operacional Específicos (macOS/Windows)
+*.DS_Store  
