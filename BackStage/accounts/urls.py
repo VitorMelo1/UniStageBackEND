@@ -3,9 +3,10 @@ from . import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
+    path('hello', views.index, name ='index'),
     path('testCreateCompany', views.cadastrationCompany, name = 'cadastrationCompany'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     #path('listCompany', views.listUserCompany_view, name = 'listCompany'),
     path('listUser', views.listUser, name = 'listUser'),
     path('listCompany', views.listCompany, name = 'listCompany'),
