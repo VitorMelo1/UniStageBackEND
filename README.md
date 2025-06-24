@@ -21,8 +21,6 @@ Utilize o comando `cd` para acessar a pasta onde está o arquivo `manage.py`:
 
 ```bash
 cd /caminho/para/sua/pasta/do/projeto/backend
-# Exemplo macOS: cd ~/Desktop/Faculdade/FTT/UniStageBack
-# Exemplo Windows: cd C:\Users\SeuUsuario\Desktop\Faculdade\FTT\UniStageBack
 ```
 
 ### 3. Configure o Ambiente Virtual
