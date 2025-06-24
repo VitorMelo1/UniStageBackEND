@@ -11,10 +11,6 @@ from django.forms.models import model_to_dict
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-
-def index(request):
-    return HttpResponse('Hello, world. Are u okay?')
-
 def createUser(data, entity):
     data['user_type'] = entity
     serializer = UserSerializer(data = data)
