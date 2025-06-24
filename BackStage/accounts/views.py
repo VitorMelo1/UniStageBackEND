@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from accounts.models import *
 from .serializers import *
 from django.forms.models import model_to_dict
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 def index(request):
@@ -87,6 +90,7 @@ def cadastrationCompany(request):
     return JsonResponse(serializer_cadastration_company, status=201)
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
 def listUser(request):
     user = User.objects.all()
     serializer = UserSerializer(user, many=True)
@@ -109,6 +113,13 @@ def listAdress(request):
     adress = Adress.objects.all()
     serializer = AddressSerializer(adress, many = True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def takeToken(request):
+    data = request.data
+    user = UserSerializer(data = data)
+    token = TokenObtainPairSerializer(user)
+    return Response(token.data)
 '''
 @api_view(['GET'])
 def listUserCompany_view(request):

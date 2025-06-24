@@ -7,6 +7,10 @@ from django.utils import timezone
 
 class User(AbstractUser):
     user_type = models.CharField(max_length=20)
+    email = models.EmailField(_("email address"), unique= True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     groups = models.ManyToManyField(
         'auth.Group',
@@ -48,7 +52,7 @@ class Telephone(models.Model):
         return self.number
    
 class ManyToManyTelephone(models.Model):
-    telephone_id = models.ForeignKey(Telephone, on_delete= models.CASCADE, db_column='telephone_id') 
+    telephone = models.ForeignKey(Telephone, on_delete= models.CASCADE, db_column='telephone_id') 
     
     entity_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     entity_id = models.PositiveIntegerField()
@@ -70,7 +74,7 @@ class Adress(models.Model):
         return self.cep
 
 class ManyToManyAdress(models.Model):
-    adress_id = models.ForeignKey(Adress, on_delete=models.CASCADE, db_column='adress_id') 
+    adress = models.ForeignKey(Adress, on_delete=models.CASCADE, db_column='adress_id') 
 
     entity_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     entity_id = models.PositiveIntegerField()
@@ -87,7 +91,7 @@ class University(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=60)
-    university_id = models.ForeignKey(University, on_delete= models.CASCADE, db_column= 'university_id')
+    university = models.ForeignKey(University, on_delete= models.CASCADE)
     
     def __str__(self):
         return self.name
@@ -95,8 +99,8 @@ class Course(models.Model):
 class Employee(models.Model):
     name = models.CharField(max_length= 60)
     cpf = models.CharField(max_length= 20) 
-    user_id = models.ForeignKey(User, on_delete= models.CASCADE, db_column= 'user_id')
-    course_id = models.ForeignKey(Course, on_delete= models.CASCADE, db_column= 'course_id')
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    course = models.ForeignKey(Course, on_delete= models.CASCADE)
     
 
     def __str__(self):
@@ -105,8 +109,13 @@ class Employee(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length= 60)
     cpf = models.CharField(max_length= 20) 
-    user_id = models.ForeignKey(User, on_delete= models.CASCADE, db_column= 'user_id')
-    course_id = models.ForeignKey(Course, on_delete= models.CASCADE, db_column= 'course_id') 
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    course = models.ForeignKey(Course, on_delete= models.CASCADE)
+    university = models.ForeignKey(University, on_delete= models.CASCADE)
+    registration = models.CharField(max_length= 15)
+    description = models.CharField(max_length= 500)
+    interest_area = models.CharField(max_length= 60)
+    period = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -114,9 +123,24 @@ class Student(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length= 60)
     cnpj = models.CharField(max_length= 20) 
-    user_id = models.ForeignKey(User, on_delete= models.CASCADE, db_column= 'user_id')
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
 
     def __str__(self):
         return self.name
+
+class SocialMedia(models.Model):
+    link = models.URLField()
+    student = models.ForeignKey(Student, on_delete= models.CASCADE)
+
+class Gender(models.Model):
+    name = models.CharField(max_length= 20)
     
+class ManyToManyGender(models.Model):
+    gender = models.ForeignKey(Gender, on_delete= models.CASCADE)
+
+    entity_type = models.ForeignKey(ContentType, on_delete= models.CASCADE)
+    entity_id = models.PositiveIntegerField()
+    entity_object = GenericForeignKey('entity_type', 'entity_id')
+
+
 
