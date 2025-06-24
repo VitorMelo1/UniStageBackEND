@@ -30,13 +30,13 @@ Crie um ambiente virtual para isolar as dependências do projeto:
 - **macOS:**
 
 ```bash
-python3 -m venv venv
+python3 -m venv .venv
 ```
 
 - **Windows:**
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 > Isso criará uma pasta chamada `venv` com o ambiente virtual.
@@ -54,13 +54,13 @@ source venv/bin/activate
 - **Windows (CMD):**
 
 ```bash
-.\venv\Scripts\activate
+.\.venv\Scripts\activate
 ```
 
 - **Windows (PowerShell):**
 
 ```powershell
-.\venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 ```
 
 > Após ativado, você verá `(venv)` no início da linha de comando.
