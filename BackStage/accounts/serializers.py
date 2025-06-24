@@ -1,6 +1,6 @@
 from rest_framework import serializers
+
 from .models import User, EntityType, Telephone, Adress, University, Course, Employee, Student, Company
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,12 +67,4 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = ['name', 'cnpj', 'user_id']
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-
-        token['user_type'] = user.user_type
         
-
-        return token

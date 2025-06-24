@@ -1,8 +1,6 @@
-import os
-from pathlib import Path
-from dotenv import load_dotenv
+# UniStageBackEND/BackStage/UniStage/settings.py
 
-load_dotenv()
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,9 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-if not SECRET_KEY:
-    raise ValueError("A variável de ambiente 'SECRET_KEY' não está definida.")
+SECRET_KEY = 'django-insecure-xi755hh43vc6g(4@hi^)$y2_sxwi$khz+(-w5r7u9+lg-#%d^r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,9 +30,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'accounts',
+    'corsheaders',  # <<< 1. ADICIONADO O APP DO CORS
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # <<< 2. ADICIONADO O MIDDLEWARE DO CORS (NO TOPO)
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,12 +124,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        
     )
+    
 }
 
-SIMPLE_JWT = {
-
-  "TOKEN_OBTAIN_SERIALIZER": "accounts.serializers.MyTokenObtainPairSerializer",
-  
-}
+# --- CONFIGURAÇÃO DO CORS ---
+# <<< 3. ADICIONADA A LISTA DE ORIGENS PERMITIDAS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",   # Endereço do seu app React
+    "http://127.0.0.1:5173",  # Adicione este também por segurança
+]

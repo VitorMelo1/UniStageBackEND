@@ -14,12 +14,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# UniStageBackEND/BackStage/UniStage/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Apenas UMA linha para toda a API. Limpo e escalável.
+    # Qualquer URL que começar com /api/ será procurada no arquivo accounts.urls
     path('accounts/', include('accounts.urls')),
 ]
